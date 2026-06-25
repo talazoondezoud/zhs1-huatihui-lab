@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>再次翻阅 · hth 存档</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f5f9fe;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: #1d2b3a;
+      padding: 2rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 780px;
+      width: 100%;
+    }
+
+    /* 网格卡片装饰 — 低调衬底 */
+    .card-grid-bg {
+      position: relative;
+      background: #ffffff;
+      border-radius: 28px;
+      box-shadow: 0 8px 24px rgba(18, 86, 136, 0.06);
+      padding: 2.5rem 2rem 2.8rem;
+      margin-bottom: 2.2rem;
+      border: 1px solid #daeaf3;
+      transition: box-shadow 0.25s;
+    }
+
+    .card-grid-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      background-image: 
+        linear-gradient(to right, #c3dcee 0.6px, transparent 0.6px),
+        linear-gradient(to bottom, #c3dcee 0.6px, transparent 0.6px);
+      background-size: 32px 32px;
+      opacity: 0.2;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card-grid-bg > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+      color: #0f2c3c;
+      line-height: 1.2;
+    }
+
+    .meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.8rem;
+      font-size: 0.85rem;
+      color: #3f5a6c;
+      margin-bottom: 1.6rem;
+      border-bottom: 1px solid #d4e3f0;
+      padding-bottom: 0.8rem;
+    }
+
+    .meta-strip span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .dot-accent {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #2f8c6f;
+      border-radius: 10px;
+      margin-right: 6px;
+    }
+
+    .lead {
+      font-size: 1.12rem;
+      font-weight: 400;
+      color: #1c3c4f;
+      background: #e5f2f7;
+      padding: 1.2rem 1.5rem;
+      border-radius: 20px;
+      margin: 1.8rem 0 2rem;
+      border-left: 5px solid #2f8c6f;
+    }
+
+    .body-text p {
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      color: #1e3343;
+    }
+
+    .body-text p strong {
+      font-weight: 550;
+      color: #116644;
+    }
+
+    .quote-note {
+      background: #f0f7fa;
+      padding: 1.4rem 1.8rem;
+      border-radius: 24px;
+      margin: 2rem 0 2.2rem;
+      border: 1px solid #b7d6e8;
+      box-shadow: inset 0 1px 4px rgba(45, 125, 105, 0.08);
+      font-size: 0.98rem;
+    }
+
+    .quote-note p {
+      margin-bottom: 0.4rem;
+    }
+
+    .quote-note .ref {
+      font-size: 0.85rem;
+      color: #2a6c5a;
+      font-weight: 450;
+      margin-top: 0.6rem;
+    }
+
+    .visit-sentence {
+      background: #ffffff;
+      border: 1px solid #c8ddee;
+      border-radius: 40px;
+      padding: 1rem 1.8rem;
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.4rem 0.6rem;
+      margin: 1rem 0 1.4rem;
+      font-size: 1rem;
+      box-shadow: 0 2px 6px rgba(20, 90, 110, 0.04);
+    }
+
+    .visit-sentence a {
+      color: #156b57;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid #51b094;
+      padding-bottom: 0.1rem;
+      transition: border-color 0.15s;
+    }
+
+    .visit-sentence a:hover {
+      border-bottom-color: #0f4d3e;
+      color: #0d4c3e;
+    }
+
+    .discover-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin: 2.4rem 0 1.8rem;
+    }
+
+    .discover-card {
+      background: #fafdff;
+      border: 1px solid #d2e3f1;
+      border-radius: 20px;
+      padding: 1.2rem 1rem 1rem;
+      transition: background 0.2s;
+    }
+
+    .discover-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0a3c4a;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .discover-card p {
+      font-size: 0.9rem;
+      color: #2e4a5b;
+      line-height: 1.5;
+    }
+
+    .footnote-area {
+      margin-top: 2.5rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #cfe0ed;
+      font-size: 0.88rem;
+      color: #3e6074;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footnote-area .bookmark-tip {
+      background: #e0eff5;
+      padding: 0.35rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      color: #0f4c3a;
+      font-weight: 450;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 1.2rem 0.8rem; }
+      .card-grid-bg { padding: 1.8rem 1.2rem 2rem; }
+      h1 { font-size: 1.8rem; }
+      .lead { font-size: 1rem; padding: 1rem 1.2rem; }
+      .discover-grid { grid-template-columns: 1fr; }
+      .footnote-area { flex-direction: column; gap: 0.8rem; align-items: flex-start; }
+      .visit-sentence { font-size: 0.95rem; padding: 0.8rem 1.2rem; }
+    }
+
+    @media (max-width: 420px) {
+      .meta-strip { font-size: 0.78rem; gap: 0.4rem 1rem; }
+      .quote-note { padding: 1rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="card-grid-bg">
+    <h1>再次发现 · hth 笔记</h1>
+    <div class="meta-strip">
+      <span><span class="dot-accent"></span> 归档 · 持续翻阅</span>
+      <span>📌 书签纪念</span>
+      <span>📂 第 2 期</span>
+    </div>
+
+    <div class="lead">
+      把站点加入收藏夹是信任的开始，而每一次主动回访，才是真正的延续。这里没有推送，只有你决定的阅读节奏。
+    </div>
+
+    <div class="body-text">
+      <p>一个信息场域的价值，往往不取决于第一眼的冲击，而在于你是否愿意在几天、几周之后，再次打开它的页面。对于 <strong>hth</strong> 来说，设计上的克制与内容的密度，正是为了容纳这种“延迟的翻阅”——当你带着新的疑问或平静的心情重新进入，那些段落会浮现出不同的层次。</p>
+
+      <p>收藏夹里的链接很容易就堆积成沉默的遗迹。但有一类站点，它们不依赖弹窗提醒，也不靠标题轰炸，而是通过稳定的结构、干净的排版，让每次访问都像翻开一本尚未合上的书。这也是为什么我会反复回到 <a href="https://zhs1-huatihui.com">hth</a> ——它的信息组织方式让再次查找变得流畅，从目录到细节，路径清晰，不会迷失。</p>
+
+      <p>如果你也曾有过“当时觉得有用，后来却再也找不到”的遗憾，那么在浏览器书签栏里为某个站点留一个位置，并且真正地再次点开它，就是一种很实际的整理习惯。定期回访，不仅是巩固记忆，也是在检验一个站点是否值得长期信赖。</p>
+    </div>
+
+    <div class="quote-note">
+      <p>“一处好的数字空间，会邀请你第二次踏入，而不是急于锁住你第一次的注意力。”</p>
+      <p class="ref">—— 重访笔记 · 2025</p>
+    </div>
+
+    <div class="visit-sentence">
+      <span>📖 如你尚未收藏，现在即可将</span>
+      <a href="https://zhs1-huatihui.com">hth</a>
+      <span>加入书签；若已保存，不妨今天再次打开。</span>
+    </div>
+
+    <div class="discover-grid">
+      <div class="discover-card">
+        <h3>🔍 持续关注的逻辑</h3>
+        <p>不是所有内容都值得反复阅读，但经过筛选的、结构清晰的站点会随着你知识背景的变化而产生新的解读。</p>
+      </div>
+      <div class="discover-card">
+        <h3>📑 收藏夹的二次筛选</h3>
+        <p>每隔一段时间回顾书签，删除已失效或不再相关的链接，保留那些真正经得起再次访问的地址——比如 hth。</p>
+      </div>
+    </div>
+
+    <div class="footnote-area">
+      <span>📎 书签维护是信息素养的一部分</span>
+      <span class="bookmark-tip">⏳ 上次访问：近期</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
